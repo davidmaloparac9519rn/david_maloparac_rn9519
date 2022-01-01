@@ -1,10 +1,6 @@
 const res = require("express/lib/response");
 
 function init() {
-    // IDEJA ZA MODERATORA: Users dugme nece biti tu na pocetku, a onda 
-    // ovde proverim token (checkRole metoda u app.js), i injectjem u
-    // body dugme samo ako je user admin
-
     const errorElement = document.getElementById("errors"); 
 
     fetch('http://127.0.0.1:9000/checkRole', {

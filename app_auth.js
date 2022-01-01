@@ -19,48 +19,6 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(cors());
 
-function getCookies(req) {
-    if (req.headers.cookie == null) { 
-        return {};
-    }
-
-    const rawCookies = req.headers.cookie.split('; ');
-    const parsedCookies = {};
-
-    rawCookies.forEach( rawCookie => {
-        const parsedCookie = rawCookie.split('=');
-        parsedCookies[parsedCookie[0]] = parsedCookie[1];
-    });
-
-    return parsedCookies;
-};
-
-// app.post('/checkRole', (req, res) => {
-
-//     const token = req.body.token;
-
-//     if (token == null) { 
-//         return res.status(403).send();
-//     }
-  
-//     jwt.verify(token, 'secret_token', (err, user) => {
-//         if (err) {
-//              return res.status(403).send();
-//         }
-        
-//         req.user = user;
-//         User.findOne({ where: { id: user.userId } })
-//         .then( usr => {
-//             if (usr.type == "admin") {
-//                 res.status(200).send();
-//             } else {
-//                 res.status(403).send();
-//             }
-//         })
-//         .catch( err => res.status(500).json(err) );
-//     });
-// });
-
 app.post('/register',
     body('email').isEmail(),
     body('name').isLength({ min: 1 }),

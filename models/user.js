@@ -2,11 +2,6 @@
 const {
   Model
 } = require('sequelize');
-// TREBA DA POGLEDAM KAKO DA U MIGRACIJI STAVIM DA 
-// IMA JEDAN DEFAULT ADMIN KOJI JE VEC NAPRAVLJEN (ili je to u seeders folderu ???)
-
-// TREBA DA EKPORTUJEM RUTER I ZA OSTALE STVARI, A NE SAMO ZA USERA
-// (pogledaj users.js (na dnu))
 const train = require('./train');
 module.exports = (sequelize, DataTypes) => {
   var User = sequelize.define("User", {
