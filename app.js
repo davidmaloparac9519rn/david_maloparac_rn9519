@@ -33,10 +33,26 @@ function authToken(req, res, next) {
     //     return next();
     // }
 
+    if (req.path == '/rides.html') {
+        return res.redirect(301, '/rides');
+    }
+    if (req.path == '/stations.html') {
+        return res.redirect(301, '/stations');
+    }
+    if (req.path == '/trains.html') {
+        return res.redirect(301, '/trains');
+    }
+    if (req.path == '/users.html') {
+        return res.redirect(301, '/users');
+    }
+    if (req.path == '/home.html') {
+        return res.redirect(301, '/');
+    }
+
     const cookies = getCookies(req);
     const token = cookies['token'];
   
-    if (token == null) { 
+    if (token == null) {
         return res.redirect(301, '/login');
     }
   
@@ -47,14 +63,14 @@ function authToken(req, res, next) {
         
         req.user = user; 
 
-        // samo admin sme da pristupi userima
-        if (req.path == '/users' && req.user.type != 'admin') {
-            return res.redirect(301, '/login');
-        }
-        // obicni user ne moze da pristupi ovim rutama
-        if ((req.path == '/trains' || req.path == '/stations' || req.path == '/rides') && req.user.type == 'standard') {
-            return res.redirect(301, '/login');
-        }
+        // // samo admin sme da pristupi korisnicima
+        // if (req.path == '/users' && req.user.type != 'admin') {
+        //     return res.redirect(301, '/login');
+        // }
+        // // obicni user ne moze da pristupi ovim rutama
+        // if ((req.path == '/trains' || req.path == '/stations' || req.path == '/rides') && req.user.type == 'standard') {
+        //     return res.redirect(301, '/login');
+        // }
 
         next();
     });
@@ -71,11 +87,23 @@ app.get('/login', (req, res) => {
 });
 
 app.get('/', authToken, (req, res) => {
-    res.sendFile('index.html', { root: './static' });
+    res.sendFile('home.html', { root: './static' });
 });
 
 app.get('/users', authToken, (req, res) => {
     res.sendFile('users.html', { root: './static' });
+});
+
+app.get('/rides', authToken, (req, res) => {
+    res.sendFile('rides.html', { root: './static' });
+});
+
+app.get('/trains', authToken, (req, res) => {
+    res.sendFile('trains.html', { root: './static' });
+});
+
+app.get('/stations', authToken, (req, res) => {
+    res.sendFile('stations.html', { root: './static' });
 });
 
 app.use(express.static(path.join(__dirname, 'static')));

@@ -1,8 +1,4 @@
 function init() {
-     if (document.cookie.includes('token=')) {
-         window.location.href = 'index.html';
-     }
-
     document.getElementById('btn').addEventListener('click', e => {
         e.preventDefault();
 
@@ -31,7 +27,7 @@ function init() {
                     errorElement.innerText = "Incorrect credentials";
                 } else {
                     document.cookie = `token=${el.token};SameSite=Lax`;
-                    window.location.href = 'index.html';
+                    window.location.href = 'home.html';
                 }
             });
     });

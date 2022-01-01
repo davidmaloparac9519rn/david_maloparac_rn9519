@@ -1,39 +1,49 @@
 const res = require("express/lib/response");
 
 function init() {
-    const errorElement = document.getElementById("errors"); 
+    // const errorElement = document.getElementById("errors"); 
 
-    fetch('http://127.0.0.1:9000/checkRole', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({token: document.cookie.split('=')[1]})
-        })
-            .catch(err => {
-                res.status(403)
-            })
-              .then(el => {
-                if (el.status != 200) {
-                    // errorElement.innerText = "Forbidden";
-                    console.log("Users button not shown, because the user is not admin.")
-                } else {
-                    var usersBtn = document.createElement("button");
-                    usersBtn.id = "users";
-                    usersBtn.className = "btn btn-primary";
-                    usersBtn.innerText = "Users";
-                    var container = document.getElementById("container");
-                    container.insertBefore(usersBtn, errorElement);
+    // fetch('http://127.0.0.1:9000/checkRole', {
+    //         method: 'POST',
+    //         headers: { 'Content-Type': 'application/json' },
+    //         body: JSON.stringify({token: document.cookie.split('=')[1]})
+    //     })
+    //         .catch(err => {
+    //             res.status(403)
+    //         })
+    //           .then(el => {
+    //             if (el.status != 200) {
+    //                 // errorElement.innerText = "Forbidden";
+    //                 console.log("Users button not shown, because the user is not admin.")
+    //             } else {
+    //                 var usersBtn = document.createElement("button");
+    //                 usersBtn.id = "users";
+    //                 usersBtn.className = "btn btn-primary";
+    //                 usersBtn.innerText = "Users";
+    //                 var container = document.getElementById("container");
+    //                 container.insertBefore(usersBtn, errorElement);
                     
-                    usersBtn.addEventListener('click', e => {
-                        e.preventDefault();
+    //                 usersBtn.addEventListener('click', e => {
+    //                     e.preventDefault();
                         
-                        try {
-                            window.location.href = 'users.html';
-                        } catch(error) {
-                            res.status(404).send('Not found');
-                        }
-                    });
-                }
-            });
+    //                     try {
+    //                         window.location.href = 'users.html';
+    //                     } catch(error) {
+    //                         res.status(404).send('Not found');
+    //                     }
+    //                 });
+    //             }
+    //         });
+
+    document.getElementById('usersBtn').addEventListener('click', e => {
+        e.preventDefault();
+
+        try {
+            window.location.href = 'newUsers.html';
+        } catch(error) {
+            res.status(404).send('Not found');
+        }
+    });
 
     document.getElementById('stations').addEventListener('click', e => {
         e.preventDefault();
@@ -59,7 +69,7 @@ function init() {
         e.preventDefault();
 
         try {
-            window.location.href = 'rides.html';
+            window.location.href = 'newRides.html';
         } catch(error) {
             res.status(404).send('Not found');
         }
