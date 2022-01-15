@@ -43,6 +43,7 @@ router.put('/users/:id', (req, res) => {
             usr.name = req.body.name;
             usr.email = req.body.email;
             // usr.train_id = req.body.train_id;
+            usr.type = req.body.type;
 
             usr.save()
                 .then( rows => res.json(rows) )

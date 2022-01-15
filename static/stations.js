@@ -39,7 +39,22 @@ function init() {
     document.getElementById('btnUpdate').addEventListener('click', e => {
         e.preventDefault();
 
-        // update
+        let id = document.getElementById('idUpdate').value;
+
+        const data = {
+            name: document.getElementById('nameUpdate').value,
+        };
+
+        fetch('http://127.0.0.1:8000/admin/stations/' + id, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        })
+            .then( res => res.json() )
+            .then( el => {
+                window.location.reload();
+            })
+            .catch( err => res.status(500).json(err) );
     });
 
     document.getElementById('btnDelete').addEventListener('click', e => {

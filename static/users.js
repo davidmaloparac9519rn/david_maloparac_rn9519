@@ -73,10 +73,18 @@ function init() {
         e.preventDefault();
 
         let id = document.getElementById('idUpdate').value;
+        let type = 'standard';
+        if (document.getElementById('adminUpdate').checked) {
+            type = 'admin';
+        }
+        if (document.getElementById('moderatorUpdate').checked) {
+            type = 'moderator';
+        }
+
         const data = {
             name: document.getElementById('nameUpdate').value,
             email: document.getElementById('emailUpdate').value,
-            admin: document.getElementById('adminUpdate').checked
+            type: type
         };
 
         fetch('http://127.0.0.1:8000/admin/users/' + id, {
