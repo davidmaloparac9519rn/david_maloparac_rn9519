@@ -80,6 +80,7 @@ function init() {
         if (document.getElementById('moderatorUpdate').checked) {
             type = 'moderator';
         }
+        var error = false;
 
         const data = {
             name: document.getElementById('nameUpdate').value,
@@ -92,9 +93,17 @@ function init() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
         })
-            .then( res => res.json() )
+            .then( res => {
+                if (res.status != 200) {
+                    error = true;
+                }
+            res.json() })
             .then( el => {
-                window.location.reload();
+                if (!error) {
+                    window.location.reload();
+                } else {
+                    console.log("Error updating user.");
+                }
             })
             .catch( err => res.status(500).json(err) );
     });

@@ -21,6 +21,8 @@ function init() {
     document.getElementById('btnNew').addEventListener('click', e => {
         e.preventDefault();
 
+        var error = false;
+
         const data = {
             name: document.getElementById('name').value,
             number_of_passengers: document.getElementById('passengers').value,
@@ -34,9 +36,17 @@ function init() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
         })
-            .then( res => res.json() )
+            .then( res => {
+                if (res.status != 200) {
+                    error = true;
+                }
+                res.json() })
             .then( el => {
-                 window.location.reload();
+                if (!error) {
+                    window.location.reload();
+                } else {
+                    console.log("Error updating train.");
+                }
             })
             .catch( err => res.status(500).json(err) );
     });
@@ -45,6 +55,7 @@ function init() {
         e.preventDefault();
 
         let id = document.getElementById('idUpdate').value;
+        var error = false;
 
         const data = {
             name: document.getElementById('nameUpdate').value,
@@ -56,9 +67,17 @@ function init() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
         })
-            .then( res => res.json() )
+            .then( res => {
+                if (res.status != 200) {
+                    error = true;
+                }
+            res.json() })
             .then( el => {
-                window.location.reload();
+                if (!error) {
+                    window.location.reload();
+                } else {
+                    console.log("Error updating ride.");
+                }
             })
             .catch( err => res.status(500).json(err) );
     });
