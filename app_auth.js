@@ -38,7 +38,8 @@ app.post('/register',
     User.create(obj).then( rows => {
         const usr = {
             userId: rows.id,
-            user: rows.name
+            user: rows.name,
+            type: rows.type
         };
 
         const token = jwt.sign(usr, 'secret_token');
@@ -63,7 +64,8 @@ app.post('/login',
             if (bcrypt.compareSync(req.body.password, usr.password)) {
                 const obj = {
                     userId: usr.id,
-                    user: usr.name
+                    user: usr.name,
+                    type: usr.type
                 };
 
                 const token = jwt.sign(obj, 'secret_token');
