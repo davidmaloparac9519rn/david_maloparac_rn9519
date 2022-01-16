@@ -32,7 +32,6 @@ function authToken(req, res, next) {
     // if (req.path == '/login' || req.path == '/register') {
     //     return next();
     // }
-    console.log(req.path);
 
     if (req.path == '/rides.html') {
         return res.redirect(301, '/rides');
@@ -63,18 +62,20 @@ function authToken(req, res, next) {
         }
         
         req.user = user;
-        console.log(user.type);
-        console.log(req.path);
 
-        // standardni user nema nema autorizaciju
-        if (user.type == "standard") {
-            return res.redirect(301, '/login');
+        // admin ima pristup svuda
+        if (user.type == "admin") {
+            return next();
         }
-        // samo admin sme da pristupi korisnicima
+        // niko osim admina ne sme da pristupi korisnicima
         if (req.path == "/users" && user.type != "admin") {
             return res.redirect(301, '/login');
         }
-        
+        // standardni user nema autorizaciju
+        if ((req.path == "/trains" || req.path == "/stations" || req.path == "/rides") && user.type == "standard") {
+            return res.redirect(301, '/login');
+        }
+
         next();
     });
 }
